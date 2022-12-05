@@ -6,8 +6,8 @@ import com.example.myapplicationmvp.view.MainView
 
 class CountersPresenter(private val view: MainView, private val model: CountersModel) {
 
-    fun onCounterClick(id: String) {
-        when (id) {
+    fun onCounterClick(buttonCounter: String) {
+        when (buttonCounter) {
             FIRST_BUTTON -> {
                 view.setText(model.next(FIRST_INDEX).toString(), FIRST_VIEW)
             }
