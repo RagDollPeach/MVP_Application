@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application MVP</string>
+    <string name="button">button</string>
+    <string name="first_counter">First counter</string>
+    <string name="second_counter">Second counter</string>
+    <string name="third_counter">Third counter</string>
+</resources>
