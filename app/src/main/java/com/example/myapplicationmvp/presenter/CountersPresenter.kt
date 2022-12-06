@@ -6,17 +6,13 @@ import com.example.myapplicationmvp.view.MainView
 
 class CountersPresenter(private val view: MainView, private val model: CountersModel) {
 
-    fun onCounterClick(buttonCounter: String) {
-        when (buttonCounter) {
-            FIRST_BUTTON -> {
-                view.setText(model.next(FIRST_INDEX).toString(), FIRST_VIEW)
-            }
-            SECOND_BUTTON -> {
-                view.setText(model.next(SECOND_INDEX).toString(), SECOND_VIEW)
-            }
-            THIRD_BUTTON -> {
-                view.setText(model.next(THIRD_INDEX).toString(), THIRD_VIEW)
-            }
-        }
+    fun onCounterClickFirstButton() {
+        view.setTextOnFirstView(model.next(FIRST_INDEX).toString())
+    }
+    fun onCounterClickSecondButton() {
+        view.setTextOnSecondView(model.next(SECOND_INDEX).toString())
+    }
+    fun onCounterClickThirdButton() {
+        view.setTextOnThirdView(model.next(THIRD_INDEX).toString())
     }
 }

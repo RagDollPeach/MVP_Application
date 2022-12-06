@@ -2,7 +2,6 @@ package com.example.myapplicationmvp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplicationmvp.utils.*
 import com.example.myapplicationmvp.databinding.ActivityMainBinding
 import com.example.myapplicationmvp.model.CountersModel
 import com.example.myapplicationmvp.presenter.CountersPresenter
@@ -18,17 +17,26 @@ class MainActivity : AppCompatActivity(), MainView {
         setContentView(binding.root)
 
         initPresenter()
+        pressButtonOne()
+        pressButtonTwo()
+        pressButtonTree()
+    }
 
-        with(binding) {
-            button1.setOnClickListener {
-                presenter.onCounterClick(FIRST_BUTTON)
-            }
-            button2.setOnClickListener {
-                presenter.onCounterClick(SECOND_BUTTON)
-            }
-            button3.setOnClickListener {
-                presenter.onCounterClick(THIRD_BUTTON)
-            }
+    private fun pressButtonOne() {
+        binding.button1.setOnClickListener {
+            presenter.onCounterClickFirstButton()
+        }
+    }
+
+    private fun pressButtonTwo() {
+        binding.button2.setOnClickListener {
+            presenter.onCounterClickSecondButton()
+        }
+    }
+
+    private fun pressButtonTree() {
+        binding.button3.setOnClickListener {
+            presenter.onCounterClickThirdButton()
         }
     }
 
@@ -36,13 +44,15 @@ class MainActivity : AppCompatActivity(), MainView {
         presenter = CountersPresenter(this, CountersModel())
     }
 
-    override fun setText(counter: String, position: String) {
-        with(binding) {
-            when (position) {
-                FIRST_VIEW -> textView1.text = counter
-                SECOND_VIEW -> textView2.text = counter
-                THIRD_VIEW -> textView3.text = counter
-            }
-        }
+    override fun setTextOnFirstView(counter: String) {
+        binding.textView1.text = counter
+    }
+
+    override fun setTextOnSecondView(counter: String) {
+        binding.textView2.text = counter
+    }
+
+    override fun setTextOnThirdView(counter: String) {
+        binding.textView3.text = counter
     }
 }
