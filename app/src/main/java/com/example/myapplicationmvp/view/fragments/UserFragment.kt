@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.adapters.UserAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
+import com.example.myapplicationmvp.core.navigation.UsersData
 import com.example.myapplicationmvp.databinding.FragmentUserBinding
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
@@ -15,7 +16,7 @@ import com.example.myapplicationmvp.presenter.UserPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener {
+class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, TransferData {
 
     companion object {
         fun getInstance(): UserFragment {
@@ -23,10 +24,11 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener {
         }
     }
 
-    private val userAdapter = UserAdapter()
+    private val userAdapter = UserAdapter(this)
 
     private val presenter: UserPresenter by moxyPresenter {
-        UserPresenter(GithubRepositoryImpl(), App.getApp().router) }
+        UserPresenter(GithubRepositoryImpl(), App.getApp().router)
+    }
 
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +48,6 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener {
             //recyclerView.setItemViewCacheSize(1)
             recyclerView.adapter = userAdapter
         }
-
     }
 
     override fun onDestroyView() {
@@ -61,6 +62,10 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener {
 
     override fun initList(list: List<GithubUser>) {
         userAdapter.users = list
+    }
+
+    override fun transferData(user: GithubUser) {
+        App.getApp().router.navigateTo(UsersData(user))
     }
 }
 

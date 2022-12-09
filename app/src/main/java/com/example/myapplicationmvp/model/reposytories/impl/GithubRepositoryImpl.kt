@@ -6,11 +6,14 @@ import com.example.myapplicationmvp.model.reposytories.GithubRepository
 class GithubRepositoryImpl: GithubRepository {
 
     private val repositories = listOf(
-        GithubUser("MrFoxy"),
-        GithubUser("hater"),
-        GithubUser("Wednesday"),
-        GithubUser("Friday"),
-        GithubUser("SaltajBolTay")
+        GithubUser("MrFoxy","Anna",25),
+        GithubUser("hater", "Pedro",18),
+        GithubUser("Wednesday","Jenna",20),
+        GithubUser("Alzheimer","Parkenson",85),
+        GithubUser("SaltajBolTay","Valera",17),
+        GithubUser("JAzeMat","Vera",37),
+        GithubUser("Vini_S_Puhoj","Nika",23),
+        GithubUser("Salt","Angelina",55)
     )
 
     override fun getUsers(): List<GithubUser> {

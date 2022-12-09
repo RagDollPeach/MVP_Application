@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationmvp.R
 import com.example.myapplicationmvp.model.data.GithubUser
+import com.example.myapplicationmvp.view.fragments.TransferData
 
-class UserAdapter : RecyclerView.Adapter<UserAdapter.GithubUserViewHolder>() {
+class UserAdapter(private val transfer: TransferData) : RecyclerView.Adapter<UserAdapter.GithubUserViewHolder>() {
 
      var users: List<GithubUser> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -37,6 +38,9 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.GithubUserViewHolder>() {
 
         fun bind(item: GithubUser) {
             _login.text = item.login
+            itemView.setOnClickListener {
+                transfer.transferData(item)
+            }
         }
     }
 }

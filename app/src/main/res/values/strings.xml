@@ -4,4 +4,7 @@
     <string name="first_counter">First counter</string>
     <string name="second_counter">Second counter</string>
     <string name="third_counter">Third counter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="abracadabra">abracadabra</string>
 </resources>
