@@ -1,10 +1,9 @@
 package com.example.myapplicationmvp.view
 
-interface MainView {
+import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
 
-    fun setTextOnFirstView(counter: String)
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface MainView: MvpView
 
-    fun setTextOnSecondView(counter: String)
-
-    fun setTextOnThirdView(counter: String)
-}
