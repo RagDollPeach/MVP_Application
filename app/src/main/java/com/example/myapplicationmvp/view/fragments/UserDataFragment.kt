@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import coil.load
 import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.R
 import com.example.myapplicationmvp.core.BackPressedListener
@@ -45,12 +46,12 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
         val age = "Age - ${user.age}"
 
         when(user.login) {
-            "MrFoxy" -> { binding.imageViewUserData.setImageResource(R.drawable.girl2) }
-            "Wednesday" -> {binding.imageViewUserData.setImageResource(R.drawable.wednesday)}
-            "Vini_S_Puhoj" -> { binding.imageViewUserData.setImageResource(R.drawable.girl) }
-            "JAzeMat" -> { binding.imageViewUserData.setImageResource(R.drawable.girl3) }
-            "Salt" -> {binding.imageViewUserData.setImageResource(R.drawable.girl4)}
-            else -> {binding.imageViewUserData.setImageResource(R.drawable.jely_fish)}
+            "MrFoxy" -> { binding.imageViewUserData.load(R.drawable.girl2) }
+            "Wednesday" -> { binding.imageViewUserData.load(R.drawable.wednesday) }
+            "Vini_S_Puhoj" -> { binding.imageViewUserData.load(R.drawable.girl) }
+            "JAzeMat" -> { binding.imageViewUserData.load(R.drawable.girl3) }
+            "Salt" -> { binding.imageViewUserData.load(R.drawable.girl4) }
+            else -> { binding.imageViewUserData.load(R.drawable.jely_fish) }
         }
 
         binding.userDataNameTextView.text = name

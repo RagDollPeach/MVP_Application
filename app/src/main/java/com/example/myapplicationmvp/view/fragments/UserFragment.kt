@@ -1,11 +1,16 @@
 package com.example.myapplicationmvp.view.fragments
 
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplicationmvp.App
+import com.example.myapplicationmvp.R
 import com.example.myapplicationmvp.adapters.UserAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
 import com.example.myapplicationmvp.core.navigation.UsersData
@@ -15,6 +20,8 @@ import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import java.io.*
+
 
 class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, TransferData {
 
@@ -41,12 +48,36 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            //recyclerView.setItemViewCacheSize(1)
             recyclerView.adapter = userAdapter
+        }
+    }
+
+    override fun onButtonPressed(picture: String) {
+        binding.buttonTest.setOnClickListener {
+            val localPath = "${App.getApp().filesDir}/assets"
+            val inputStream = requireContext().assets.open(picture)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            try {
+                val file = File(localPath).apply { createNewFile() }
+                FileOutputStream(file).also {
+                    bitmap.compress(CompressFormat.PNG, 100, it)
+                    it.flush()
+                    it.close()
+                }
+            } catch (e: IOException) {
+                e.stackTrace
+            }
+        }
+    }
+
+    override fun showPicture() {
+        binding.buttonTest.setOnClickListener {
+            binding.imageViewTest.setImageResource(R.drawable.girl)
         }
     }
 

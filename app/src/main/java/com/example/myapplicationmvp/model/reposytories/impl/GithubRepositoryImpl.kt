@@ -17,7 +17,11 @@ class GithubRepositoryImpl: GithubRepository {
         GithubUser("Salt","Angelina",55)
     )
 
+    private val picture = "girl.jpg"
+
     override fun getUsers(): Single<List<GithubUser>> {
         return Single.create { it.onSuccess(repositories) }
     }
+
+    override fun getPicture(): Single<String> = Single.create { it.onSuccess(picture) }
 }

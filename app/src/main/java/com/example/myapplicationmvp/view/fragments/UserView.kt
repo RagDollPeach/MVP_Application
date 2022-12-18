@@ -9,4 +9,6 @@ import moxy.viewstate.strategy.StateStrategyType
 interface UserView: MvpView {
 
     fun initList(list: List<GithubUser>)
+    fun onButtonPressed(picture: String)
+    fun showPicture()
 }

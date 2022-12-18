@@ -14,12 +14,19 @@ class UserPresenter(private val repository: GithubRepository
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         repository.getUsers()
-           // .delay(1,TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-            { viewState.initList(it) },
+            { viewState.initList(it)},
             { Log.e("@","some thing went wrong") })
+
+        repository.getPicture()
+            .subscribeOn(Schedulers.newThread())
+            .doOnSuccess { viewState.onButtonPressed(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { viewState.showPicture()  },
+                { Log.e("@","wrong picture") })
     }
 
     fun onBackPressed() : Boolean {
