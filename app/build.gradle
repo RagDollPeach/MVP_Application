@@ -17,6 +17,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "SERVER_URL", "\"https://api.github.com/\""
     }
 
     buildFeatures {
@@ -44,7 +46,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    //material & junit
+    //Material & junit
     implementation 'com.google.android.material:material:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
@@ -56,7 +58,7 @@ dependencies {
     implementation 'com.github.moxy-community:moxy-androidx:2.2.2'
     kapt "com.github.moxy-community:moxy-compiler:2.2.2"
 
-    //cicerone
+    //Cicerone
     implementation 'com.github.terrakok:cicerone:7.1'
 
     //RxJava
@@ -66,4 +68,10 @@ dependencies {
     //Coil
     implementation 'io.coil-kt:coil:2.2.2'
     implementation("io.coil-kt:coil-compose:2.2.2")
+
+    //Retrofit
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 }

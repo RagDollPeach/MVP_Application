@@ -4,16 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.myapplicationmvp.App
-import com.example.myapplicationmvp.R
+import com.example.myapplicationmvp.adapters.UserRepoAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
+import com.example.myapplicationmvp.core.networck.NetworkProviderRepos
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
 import com.example.myapplicationmvp.model.data.GithubUser
-import com.example.myapplicationmvp.presenter.DataPresenter
+import com.example.myapplicationmvp.model.data.Repo
+import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
+import com.example.myapplicationmvp.presenter.UserDataPresenter
 import com.example.myapplicationmvp.utils.ARGS_KEY
+import com.example.myapplicationmvp.utils.makeGone
+import com.example.myapplicationmvp.utils.makeInvisible
+import com.example.myapplicationmvp.utils.makeVisible
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import java.util.*
 
 class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListener {
 
@@ -22,9 +30,13 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
             arguments = Bundle().also { it.putParcelable(ARGS_KEY, user) }
         }
     }
+    private val userDataAdapter = UserRepoAdapter()
+
     private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) }
 
-    private val presenter: DataPresenter by moxyPresenter { DataPresenter(user, App.getApp().router) }
+    private val presenter: UserDataPresenter by moxyPresenter {
+        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user!!).usersApi), App.getApp().router)
+    }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!
 
@@ -36,30 +48,51 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            reposRecycle.layoutManager = LinearLayoutManager(requireContext())
+            reposRecycle.adapter = userDataAdapter
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     override fun transferData(user: GithubUser) {
-        val name = "Name - ${user.name}"
-        val age = "Age - ${user.age}"
+        val name = "User - ${user.login.uppercase(Locale.ROOT)}"
+        val avatar = user.avatarUrl
 
-        when(user.login) {
-            "MrFoxy" -> { binding.imageViewUserData.load(R.drawable.girl2) }
-            "Wednesday" -> { binding.imageViewUserData.load(R.drawable.wednesday) }
-            "Vini_S_Puhoj" -> { binding.imageViewUserData.load(R.drawable.girl) }
-            "JAzeMat" -> { binding.imageViewUserData.load(R.drawable.girl3) }
-            "Salt" -> { binding.imageViewUserData.load(R.drawable.girl4) }
-            else -> { binding.imageViewUserData.load(R.drawable.jely_fish) }
+        binding.apply {
+            imageViewUserData.load(avatar)
+            userDataNameTextView.text = name
         }
+    }
 
-        binding.userDataNameTextView.text = name
-        binding.userDataAgeTextView.text = age
+    override fun getRepos(list: List<Repo>) {
+        userDataAdapter.repos = list
     }
 
     override fun onBackPressed(): Boolean {
         presenter.onBackPressed()
         return true
+    }
+
+    override fun startLoading() {
+        binding.apply {
+            progressBarUserDataFragment.makeVisible()
+            imageViewUserData.makeInvisible()
+            userDataNameTextView.makeInvisible()
+        }
+    }
+
+    override fun stopLoading() {
+        binding.apply {
+            progressBarUserDataFragment.makeGone()
+            imageViewUserData.makeVisible()
+            userDataNameTextView.makeVisible()
+        }
     }
 }
