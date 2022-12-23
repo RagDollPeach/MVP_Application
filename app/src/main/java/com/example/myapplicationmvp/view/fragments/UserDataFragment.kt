@@ -64,10 +64,12 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
     override fun transferData(user: GithubUser) {
         val name = "User - ${user.login.uppercase(Locale.ROOT)}"
         val avatar = user.avatarUrl
+        val repository = "Repositories:"
 
         binding.apply {
             imageViewUserData.load(avatar)
             userDataNameTextView.text = name
+            userDataRepoTextView.text = repository
         }
     }
 
@@ -85,6 +87,7 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
             progressBarUserDataFragment.makeVisible()
             imageViewUserData.makeInvisible()
             userDataNameTextView.makeInvisible()
+            userDataRepoTextView.makeInvisible()
         }
     }
 
@@ -93,6 +96,7 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
             progressBarUserDataFragment.makeGone()
             imageViewUserData.makeVisible()
             userDataNameTextView.makeVisible()
+            userDataRepoTextView.makeVisible()
         }
     }
 }
