@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class NetworkProviderRepos(user: GithubUser) {
 
-    private val userRepos = user.repos.replace("repos", "").trim()
+    private val userRepos = user.reposPath.replace("repos", "").trim()
     val usersApi: UsersApi by lazy { createRetrofit(userRepos).create(UsersApi::class.java) }
 
     private fun createRetrofit(url: String): Retrofit = Retrofit.Builder()

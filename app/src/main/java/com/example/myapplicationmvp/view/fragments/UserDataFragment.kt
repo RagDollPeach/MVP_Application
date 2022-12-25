@@ -10,15 +10,15 @@ import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.adapters.UserRepoAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
 import com.example.myapplicationmvp.core.networck.NetworkProviderRepos
+import com.example.myapplicationmvp.core.utils.ARGS_KEY
+import com.example.myapplicationmvp.core.utils.makeGone
+import com.example.myapplicationmvp.core.utils.makeInvisible
+import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
 import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserDataPresenter
-import com.example.myapplicationmvp.utils.ARGS_KEY
-import com.example.myapplicationmvp.utils.makeGone
-import com.example.myapplicationmvp.utils.makeInvisible
-import com.example.myapplicationmvp.utils.makeVisible
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import java.util.*
@@ -35,7 +35,8 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
     private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) }
 
     private val presenter: UserDataPresenter by moxyPresenter {
-        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user!!).usersApi), App.getApp().router)
+        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user!!)
+            .usersApi), App.getApp().router)
     }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!

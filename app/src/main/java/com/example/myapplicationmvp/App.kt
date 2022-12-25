@@ -1,14 +1,26 @@
 package com.example.myapplicationmvp
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import com.example.myapplicationmvp.core.database.MvpAppDatabase
+import com.example.myapplicationmvp.core.utils.ConnectivityListener
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 
 class App: Application() {
+
+    private lateinit var connectivityListener: ConnectivityListener
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        connectivityListener = ConnectivityListener(
+            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+
+        RxJavaPlugins.setErrorHandler {  }
     }
 
     companion object {
@@ -20,4 +32,9 @@ class App: Application() {
 
     val navigationHolder = cicerone.getNavigatorHolder()
     val router = cicerone.router
+
+    val database: MvpAppDatabase by lazy { MvpAppDatabase.create(this) }
+
+    fun getConnectObservable() = connectivityListener.status()
+    fun getConnectSingle() = connectivityListener.statusSingle()
 }

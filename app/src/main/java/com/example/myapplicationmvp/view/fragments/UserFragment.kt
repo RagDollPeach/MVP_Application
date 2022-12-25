@@ -17,8 +17,8 @@ import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
 import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserPresenter
-import com.example.myapplicationmvp.utils.makeGone
-import com.example.myapplicationmvp.utils.makeVisible
+import com.example.myapplicationmvp.core.utils.makeGone
+import com.example.myapplicationmvp.core.utils.makeVisible
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import java.io.*
@@ -84,8 +84,6 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
         App.getApp().router.navigateTo(UsersData(user))
     }
 
-    override fun getRepos(list: List<Repo>) {
-
-    }
+    override fun getRepos(list: List<Repo>) {}
 }
 

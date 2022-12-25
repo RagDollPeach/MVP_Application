@@ -8,17 +8,24 @@ import com.example.myapplicationmvp.model.reposytories.GithubRepository
 import io.reactivex.rxjava3.core.Single
 
 class GithubRepositoryImpl constructor(
-    private val usersApi: UsersApi
+    private val usersApi: UsersApi,
+  //  private val userDao: UserDao
 ): GithubRepository {
+
+//    private fun fetchFromApi(shouldPersist: Boolean): Single<List<GithubUser>> {
+//        return usersApi.getAllUsers()
+//            .map { it.map(UserMapper::mapToGitHubUser) }
+//            .flatMap { userDao.insertAll(it.map(UserMapper)) }
+//    }
 
     override fun getUsers(): Single<List<GithubUser>> {
        return usersApi.getAllUsers()
-           .map { it.map(UserMapper::mapToEntity) }
+           .map { it.map(UserMapper::mapToGitHubUser) }
     }
 
     override fun getUserById(login: String): Single<GithubUser> {
         return usersApi.getUser(login)
-            .map(UserMapper::mapToEntity)
+            .map(UserMapper::mapToGitHubUser)
     }
 
     override fun getAllRepos(): Single<List<Repo>> {

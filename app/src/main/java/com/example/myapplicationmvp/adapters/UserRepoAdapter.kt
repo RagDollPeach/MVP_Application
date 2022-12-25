@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationmvp.R
 import com.example.myapplicationmvp.model.data.Repo
 
-class UserRepoAdapter: RecyclerView.Adapter<UserRepoAdapter.UserRepoViewHolder>() {
+class UserRepoAdapter : RecyclerView.Adapter<UserRepoAdapter.UserRepoViewHolder>() {
 
     var repos: List<Repo> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -32,17 +32,18 @@ class UserRepoAdapter: RecyclerView.Adapter<UserRepoAdapter.UserRepoViewHolder>(
     }
 
     override fun getItemCount(): Int {
-      return repos.size
+        return repos.size
     }
 
-   inner class UserRepoViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class UserRepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-       private val _repo by lazy { itemView.findViewById<TextView>(R.id.repos_text_view) }
+        private val _repo by lazy { itemView.findViewById<TextView>(R.id.repos_text_view) }
 
-       fun bind(repo: Repo) {
-           _repo.text = repo.name
-           _repo.setOnClickListener {
-               Toast.makeText(itemView.context, "Forks - ${repo.forksCount}",Toast.LENGTH_SHORT).show() }
-       }
-   }
+        fun bind(repo: Repo) {
+            _repo.text = repo.name
+            itemView.setOnClickListener {
+                Toast.makeText(itemView.context, "Forks - ${repo.forksCount}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }

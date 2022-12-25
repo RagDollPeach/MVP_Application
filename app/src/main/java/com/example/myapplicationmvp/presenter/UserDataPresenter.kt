@@ -2,7 +2,7 @@ package com.example.myapplicationmvp.presenter
 
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.reposytories.GithubRepository
-import com.example.myapplicationmvp.utils.disposeBy
+import com.example.myapplicationmvp.core.utils.disposeBy
 import com.example.myapplicationmvp.view.fragments.TransferData
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
