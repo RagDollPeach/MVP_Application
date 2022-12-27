@@ -17,6 +17,8 @@ import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
+import com.example.myapplicationmvp.model.database.RoomGithubRepositoriesCache
+import com.example.myapplicationmvp.model.database.RoomGithubUsersCache
 import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserDataPresenter
 import moxy.MvpAppCompatFragment
@@ -36,7 +38,9 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
 
     private val presenter: UserDataPresenter by moxyPresenter {
         UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user!!)
-            .usersApi), App.getApp().router)
+            .usersApi,App.getApp().database.userDao()
+            , RoomGithubRepositoriesCache()
+            , RoomGithubUsersCache()), App.getApp().router)
     }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!

@@ -1,6 +1,6 @@
 package com.example.myapplicationmvp.core.mapper
 
-import com.example.myapplicationmvp.core.database.UserEntity
+import com.example.myapplicationmvp.model.database.UserEntity
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.UserDto
 

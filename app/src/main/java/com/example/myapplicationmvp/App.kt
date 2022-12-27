@@ -3,7 +3,7 @@ package com.example.myapplicationmvp
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import com.example.myapplicationmvp.core.database.MvpAppDatabase
+import com.example.myapplicationmvp.model.database.MvpAppDatabase
 import com.example.myapplicationmvp.core.utils.ConnectivityListener
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router

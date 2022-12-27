@@ -19,6 +19,8 @@ import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserPresenter
 import com.example.myapplicationmvp.core.utils.makeGone
 import com.example.myapplicationmvp.core.utils.makeVisible
+import com.example.myapplicationmvp.model.database.RoomGithubRepositoriesCache
+import com.example.myapplicationmvp.model.database.RoomGithubUsersCache
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import java.io.*
@@ -35,7 +37,10 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
     private val userAdapter = UserAdapter(this)
 
     private val presenter: UserPresenter by moxyPresenter {
-        UserPresenter(GithubRepositoryImpl(NetworkProvider.usersApi), App.getApp().router)
+        UserPresenter(GithubRepositoryImpl(NetworkProvider.usersApi
+            ,App.getApp().database.userDao()
+            ,RoomGithubRepositoriesCache()
+            ,RoomGithubUsersCache()), App.getApp().router)
     }
 
     private var _binding: FragmentUserBinding? = null

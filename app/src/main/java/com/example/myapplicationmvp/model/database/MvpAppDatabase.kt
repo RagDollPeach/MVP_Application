@@ -1,4 +1,4 @@
-package com.example.myapplicationmvp.core.database
+package com.example.myapplicationmvp.model.database
 
 import android.content.Context
 import androidx.room.Database
