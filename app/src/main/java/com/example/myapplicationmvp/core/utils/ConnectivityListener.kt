@@ -5,15 +5,16 @@ import android.net.Network
 import android.net.NetworkRequest
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class ConnectivityListener(connectivityManager: ConnectivityManager) {
 
-    private val subject = PublishSubject.create<Boolean>()
+    private val subject: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     init {
+        subject.onNext(false)
         val request = NetworkRequest.Builder().build()
-        connectivityManager.requestNetwork(request, object : ConnectivityManager.NetworkCallback() {
+        connectivityManager.registerNetworkCallback(request, object : ConnectivityManager.NetworkCallback() {
 
             override fun onAvailable(network: Network) {
                 subject.onNext(true)

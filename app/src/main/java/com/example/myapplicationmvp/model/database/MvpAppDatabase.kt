@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [UserEntity::class], version = 1)
+@Database(entities = [UserEntity::class, RepoObjectEntity::class], version = 1)
 abstract class MvpAppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun reposDao(): ReposDAO
 
     companion object {
         fun create(context: Context): MvpAppDatabase {

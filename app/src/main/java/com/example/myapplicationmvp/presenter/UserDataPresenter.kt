@@ -33,11 +33,13 @@ class UserDataPresenter(
                 .disposeBy(bag)
         }
 
-        repository.getAllRepos()
+        repository.getAllRepos(user!!)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                viewState.getRepos(it) },
+                viewState.transferData(user)
+                viewState.getRepos(it)
+                viewState.stopLoading() },
                 {})
             .disposeBy(bag)
     }

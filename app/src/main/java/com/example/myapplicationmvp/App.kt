@@ -12,10 +12,13 @@ import io.reactivex.rxjava3.plugins.RxJavaPlugins
 class App: Application() {
 
     private lateinit var connectivityListener: ConnectivityListener
+  //  private lateinit var appComponent : AppComponent
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+      //  appComponent = DaggerAppComponent.create()
 
         connectivityListener = ConnectivityListener(
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)

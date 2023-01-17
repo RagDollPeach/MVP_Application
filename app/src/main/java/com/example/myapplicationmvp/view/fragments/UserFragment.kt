@@ -39,8 +39,10 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
     private val presenter: UserPresenter by moxyPresenter {
         UserPresenter(GithubRepositoryImpl(NetworkProvider.usersApi
             ,App.getApp().database.userDao()
+            ,App.getApp().database.reposDao()
             ,RoomGithubRepositoriesCache()
-            ,RoomGithubUsersCache()), App.getApp().router)
+            ,RoomGithubUsersCache()
+            ,App.getApp().getConnectSingle()), App.getApp().router)
     }
 
     private var _binding: FragmentUserBinding? = null

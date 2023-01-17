@@ -1,5 +1,6 @@
 package com.example.myapplicationmvp.view.fragments
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,13 +35,15 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
     }
     private val userDataAdapter = UserRepoAdapter()
 
-    private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) }
+    private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) as GithubUser }
 
     private val presenter: UserDataPresenter by moxyPresenter {
-        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user!!)
+        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user)
             .usersApi,App.getApp().database.userDao()
+            ,App.getApp().database.reposDao()
             , RoomGithubRepositoriesCache()
-            , RoomGithubUsersCache()), App.getApp().router)
+            , RoomGithubUsersCache()
+            ,App.getApp().getConnectSingle()), App.getApp().router)
     }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!
