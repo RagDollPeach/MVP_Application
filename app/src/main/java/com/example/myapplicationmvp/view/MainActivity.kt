@@ -15,7 +15,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private val navigator = AppNavigator(this, R.id.main_container)
     private lateinit var binding: ActivityMainBinding
 
-    private val presenter by moxyPresenter { MainPresenter(App.getApp().router) }
+    private val presenter by moxyPresenter { MainPresenter(App.getApp().router).apply {
+        App.getApp().appComponent.inject(this)
+    } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

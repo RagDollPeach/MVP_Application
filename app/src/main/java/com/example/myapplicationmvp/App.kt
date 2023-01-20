@@ -5,20 +5,23 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.example.myapplicationmvp.model.database.MvpAppDatabase
 import com.example.myapplicationmvp.core.utils.ConnectivityListener
+import com.example.myapplicationmvp.di.AppComponent
+import com.example.myapplicationmvp.di.DaggerAppComponent
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 
+
 class App: Application() {
 
     private lateinit var connectivityListener: ConnectivityListener
-  //  private lateinit var appComponent : AppComponent
+    lateinit var appComponent : AppComponent
 
     override fun onCreate() {
         super.onCreate()
         instance = this
 
-      //  appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.create()
 
         connectivityListener = ConnectivityListener(
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)

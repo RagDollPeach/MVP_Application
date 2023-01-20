@@ -1,10 +1,12 @@
 package com.example.myapplicationmvp.di
 
-import com.example.myapplicationmvp.model.reposytories.GithubRepository
+import com.example.myapplicationmvp.presenter.MainPresenter
+import com.example.myapplicationmvp.view.MainActivity
 import dagger.Component
 
-
+@Component
 interface AppComponent {
 
-    fun getUsersRepos(): GithubRepository
+    fun inject(mainActivity: MainActivity)
+    fun inject(mainPresenter: MainPresenter)
 }

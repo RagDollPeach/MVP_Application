@@ -14,8 +14,7 @@ class UserDataPresenter(
     private val user: GithubUser?,
     private val repository: GithubRepository,
     private val router: Router
-) :
-    MvpPresenter<TransferData>() {
+) : MvpPresenter<TransferData>(){
 
     private val bag = CompositeDisposable()
 
