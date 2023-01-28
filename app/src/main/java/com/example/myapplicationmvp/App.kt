@@ -5,8 +5,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.example.myapplicationmvp.model.database.MvpAppDatabase
 import com.example.myapplicationmvp.core.utils.ConnectivityListener
-import com.example.myapplicationmvp.di.custom.DaggerDiContainer
-import com.example.myapplicationmvp.di.custom.DiContainer
+import com.example.myapplicationmvp.di.custom.AppComponent
+import com.example.myapplicationmvp.di.custom.DaggerAppComponent
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 
@@ -22,7 +22,7 @@ class App: Application() {
 
     val database: MvpAppDatabase by lazy { MvpAppDatabase.create(this) }
 
-    lateinit var diContainer: DiContainer
+    lateinit var diContainer: AppComponent
 
     companion object {
         lateinit var instance: App
@@ -32,7 +32,7 @@ class App: Application() {
         super.onCreate()
         instance = this
 
-        diContainer = DaggerDiContainer
+        diContainer = DaggerAppComponent
             .builder()
             .user(user = null)
             .build()
@@ -40,8 +40,6 @@ class App: Application() {
         connectivityListener = ConnectivityListener(
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
     }
-
-    fun getConnectObservable() = connectivityListener.status()
 
     fun getConnectSingle() = connectivityListener.statusSingle()
 }

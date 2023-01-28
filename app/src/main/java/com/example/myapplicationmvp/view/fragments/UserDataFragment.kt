@@ -15,7 +15,7 @@ import com.example.myapplicationmvp.core.utils.makeGone
 import com.example.myapplicationmvp.core.utils.makeInvisible
 import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
-import com.example.myapplicationmvp.di.custom.DaggerDiContainer
+import com.example.myapplicationmvp.di.custom.DaggerAppComponent
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
 import com.example.myapplicationmvp.presenter.UserDataPresenter
@@ -41,7 +41,7 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.instance.diContainer = DaggerDiContainer
+        App.instance.diContainer = DaggerAppComponent
             .builder()
             .user(user)
             .build()

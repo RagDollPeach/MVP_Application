@@ -10,7 +10,7 @@ import dagger.BindsInstance
 import dagger.Component
 
 @Component(modules = [GitHubModule::class, NavigationModule::class])
-interface DiContainer {
+interface AppComponent {
 
     fun inject(presenter: MainPresenter)
 
@@ -21,7 +21,7 @@ interface DiContainer {
     @Component.Builder
     interface Builder {
 
-        fun build(): DiContainer
+        fun build(): AppComponent
 
         @BindsInstance
         fun user(user: GithubUser?): Builder
