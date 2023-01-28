@@ -1,22 +1,23 @@
 package com.example.myapplicationmvp.core.networck
 
 import com.example.myapplicationmvp.BuildConfig
-import com.google.gson.GsonBuilder
+import com.example.myapplicationmvp.model.data.GithubUser
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NetworkProvider {
+class NetworkProvider {
+    fun usersApi(user: GithubUser?): UsersApi {
+        return if (user == null) {
+            createRetrofit(BuildConfig.SERVER_URL).create(UsersApi::class.java)
+        } else {
+            val userRepos = user.reposPath.replace("repos", "").trim()
+            createRetrofit(userRepos).create(UsersApi::class.java)
+        }
+    }
 
-    val usersApi: UsersApi by lazy { createRetrofit().create(UsersApi::class.java) }
-
-    fun createGsonFactory() = GsonBuilder()
-        //.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .excludeFieldsWithoutExposeAnnotation()
-        .create()
-
-    private fun createRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.SERVER_URL)
+    private fun createRetrofit(url: String): Retrofit = Retrofit.Builder()
+        .baseUrl(url)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()

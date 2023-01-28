@@ -1,13 +1,21 @@
 package com.example.myapplicationmvp.presenter
 
+import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.core.navigation.UsersScreens
 import com.example.myapplicationmvp.view.MainView
 import com.github.terrakok.cicerone.Router
-import moxy.InjectViewState
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-@InjectViewState
-class MainPresenter(private val router: Router): MvpPresenter<MainView>() {
+
+class MainPresenter: MvpPresenter<MainView>() {
+
+    @Inject
+    lateinit var router: Router
+
+    init {
+        App.instance.diContainer.inject(this)
+    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

@@ -1,6 +1,7 @@
 package com.example.myapplicationmvp.model.reposytories.impl
 
 import android.util.Log
+import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.core.mapper.UserMapper
 import com.example.myapplicationmvp.core.networck.UsersApi
 import com.example.myapplicationmvp.model.data.GithubUser
@@ -12,14 +13,15 @@ import com.example.myapplicationmvp.model.database.UserDao
 import com.example.myapplicationmvp.model.reposytories.GithubRepository
 import io.reactivex.rxjava3.core.Single
 
-class GithubRepositoryImpl constructor(
+class GithubRepositoryImpl (
     private val usersApi: UsersApi,
     private val userDao: UserDao,
     private val repos: ReposDAO,
     private val reposCache: RoomRepos,
     private val usersCache: RoomUsers,
-    private val networkStatus: Single<Boolean>,
 ) : GithubRepository {
+
+    private val networkStatus: Single<Boolean> = App.instance.getConnectSingle()
 
     override fun getUsers(): Single<List<GithubUser>> {
         return networkStatus.flatMap { hasConnection ->

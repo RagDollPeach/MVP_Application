@@ -10,17 +10,14 @@ import coil.load
 import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.adapters.UserRepoAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
-import com.example.myapplicationmvp.core.networck.NetworkProviderRepos
 import com.example.myapplicationmvp.core.utils.ARGS_KEY
 import com.example.myapplicationmvp.core.utils.makeGone
 import com.example.myapplicationmvp.core.utils.makeInvisible
 import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
+import com.example.myapplicationmvp.di.custom.DaggerDiContainer
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
-import com.example.myapplicationmvp.model.database.RoomGithubRepositoriesCache
-import com.example.myapplicationmvp.model.database.RoomGithubUsersCache
-import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserDataPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -33,20 +30,22 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
             arguments = Bundle().also { it.putParcelable(ARGS_KEY, user) }
         }
     }
+
     private val userDataAdapter = UserRepoAdapter()
 
     private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) as GithubUser }
 
-    private val presenter: UserDataPresenter by moxyPresenter {
-        UserDataPresenter(user, GithubRepositoryImpl(NetworkProviderRepos(user)
-            .usersApi,App.getApp().database.userDao()
-            ,App.getApp().database.reposDao()
-            , RoomGithubRepositoriesCache()
-            , RoomGithubUsersCache()
-            ,App.getApp().getConnectSingle()), App.getApp().router)
-    }
+    private val presenter: UserDataPresenter by moxyPresenter { UserDataPresenter(user) }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        App.instance.diContainer = DaggerDiContainer
+            .builder()
+            .user(user)
+            .build()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -11,20 +11,15 @@ import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.adapters.UserAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
 import com.example.myapplicationmvp.core.navigation.UsersData
-import com.example.myapplicationmvp.core.networck.NetworkProvider
+import com.example.myapplicationmvp.core.utils.makeGone
+import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserBinding
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
-import com.example.myapplicationmvp.model.reposytories.impl.GithubRepositoryImpl
 import com.example.myapplicationmvp.presenter.UserPresenter
-import com.example.myapplicationmvp.core.utils.makeGone
-import com.example.myapplicationmvp.core.utils.makeVisible
-import com.example.myapplicationmvp.model.database.RoomGithubRepositoriesCache
-import com.example.myapplicationmvp.model.database.RoomGithubUsersCache
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import java.io.*
-
 
 class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, TransferData {
 
@@ -36,14 +31,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
 
     private val userAdapter = UserAdapter(this)
 
-    private val presenter: UserPresenter by moxyPresenter {
-        UserPresenter(GithubRepositoryImpl(NetworkProvider.usersApi
-            ,App.getApp().database.userDao()
-            ,App.getApp().database.reposDao()
-            ,RoomGithubRepositoriesCache()
-            ,RoomGithubUsersCache()
-            ,App.getApp().getConnectSingle()), App.getApp().router)
-    }
+    private val presenter: UserPresenter by moxyPresenter { UserPresenter() }
 
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
@@ -88,7 +76,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackPressedListener, Tran
     }
 
     override fun transferData(user: GithubUser) {
-        App.getApp().router.navigateTo(UsersData(user))
+        App.instance.router.navigateTo(UsersData(user))
     }
 
     override fun getRepos(list: List<Repo>) {}
