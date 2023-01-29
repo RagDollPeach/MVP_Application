@@ -1,9 +1,11 @@
 package com.example.myapplicationmvp.presenter
 
+import android.util.Log
 import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.reposytories.GithubRepository
 import com.example.myapplicationmvp.core.utils.disposeBy
+import com.example.myapplicationmvp.di.custom.DaggerDiContainer
 import com.example.myapplicationmvp.view.fragments.TransferData
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 class UserDataPresenter(
     private val user: GithubUser?
-) : MvpPresenter<TransferData>(){
+) : MvpPresenter<TransferData>() {
 
     @Inject
     lateinit var repository: GithubRepository
@@ -25,6 +27,11 @@ class UserDataPresenter(
     private val bag = CompositeDisposable()
 
     init {
+        App.instance.diContainer = DaggerDiContainer
+            .builder()
+            .user(user)
+            .build()
+
         App.instance.diContainer.inject(this)
     }
 
@@ -39,7 +46,7 @@ class UserDataPresenter(
                     viewState.transferData(it)
                     viewState.stopLoading()
                 },
-                    {})
+                    { Log.e("@@@","some thing went wrong in UserDataPresenter, getUsersById method")})
                 .disposeBy(bag)
         }
         if (user != null) {
@@ -51,7 +58,7 @@ class UserDataPresenter(
                     viewState.getRepos(it)
                     viewState.stopLoading()
                 },
-                    {})
+                    {Log.e("@@@","some thing went wrong in UserDataPresenter, getAllRepos method")})
                 .disposeBy(bag)
         }
     }

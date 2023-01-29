@@ -11,13 +11,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class UserPresenter: MvpPresenter<UserView>() {
+class UserPresenter : MvpPresenter<UserView>() {
 
     @Inject
     lateinit var repository: GithubRepository
 
     @Inject
-    lateinit var router : Router
+    lateinit var router: Router
 
     init {
         App.instance.diContainer.inject(this)
@@ -31,13 +31,14 @@ class UserPresenter: MvpPresenter<UserView>() {
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-            { viewState.initList(it)
-            viewState.stopLoading()},
-            { Log.e("@","some thing went wrong") })
-
+                {
+                    viewState.initList(it)
+                    viewState.stopLoading()
+                },
+                { Log.e("@@@", "some thing went wrong in UserPresenter, getUsers method") })
     }
 
-    fun onBackPressed() : Boolean {
+    fun onBackPressed(): Boolean {
         router.exit()
         return true
     }

@@ -36,10 +36,10 @@ class UserAdapter(private val transfer: TransferData) : RecyclerView.Adapter<Use
 
         private val _login by lazy { itemView.findViewById<TextView>(R.id.login_textview_recycler_item) }
 
-        fun bind(item: GithubUser) {
-            _login.text = item.login
+        fun bind(user: GithubUser) {
+            _login.text = user.login
             itemView.setOnClickListener {
-                transfer.transferData(item)
+                transfer.transferData(user)
             }
         }
     }

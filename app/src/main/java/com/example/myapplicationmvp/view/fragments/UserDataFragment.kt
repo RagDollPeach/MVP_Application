@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
-import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.adapters.UserRepoAdapter
 import com.example.myapplicationmvp.core.BackPressedListener
 import com.example.myapplicationmvp.core.utils.ARGS_KEY
@@ -15,7 +14,6 @@ import com.example.myapplicationmvp.core.utils.makeGone
 import com.example.myapplicationmvp.core.utils.makeInvisible
 import com.example.myapplicationmvp.core.utils.makeVisible
 import com.example.myapplicationmvp.databinding.FragmentUserDataBinding
-import com.example.myapplicationmvp.di.custom.DaggerDiContainer
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.data.Repo
 import com.example.myapplicationmvp.presenter.UserDataPresenter
@@ -38,14 +36,6 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
     private val presenter: UserDataPresenter by moxyPresenter { UserDataPresenter(user) }
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        App.instance.diContainer = DaggerDiContainer
-            .builder()
-            .user(user)
-            .build()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

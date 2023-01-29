@@ -5,7 +5,7 @@ import com.example.myapplicationmvp.model.database.ReposDAO
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = [DatabaseModule::class])
 class ReposModule {
 
     @Provides
