@@ -5,7 +5,7 @@ import com.example.myapplicationmvp.App
 import com.example.myapplicationmvp.model.data.GithubUser
 import com.example.myapplicationmvp.model.reposytories.GithubRepository
 import com.example.myapplicationmvp.core.utils.disposeBy
-import com.example.myapplicationmvp.di.custom.DaggerDiContainer
+import com.example.myapplicationmvp.di.custom.DaggerAppComponent
 import com.example.myapplicationmvp.view.fragments.TransferData
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -27,7 +27,7 @@ class UserDataPresenter(
     private val bag = CompositeDisposable()
 
     init {
-        App.instance.diContainer = DaggerDiContainer
+        App.instance.diContainer = DaggerAppComponent
             .builder()
             .user(user)
             .build()
