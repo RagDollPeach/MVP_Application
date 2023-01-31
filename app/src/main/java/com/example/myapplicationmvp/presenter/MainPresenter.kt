@@ -14,7 +14,7 @@ class MainPresenter: MvpPresenter<MainView>() {
     lateinit var router: Router
 
     init {
-        App.instance.diContainer.inject(this)
+        App.instance.appComponent.inject(this)
     }
 
     override fun onFirstViewAttach() {

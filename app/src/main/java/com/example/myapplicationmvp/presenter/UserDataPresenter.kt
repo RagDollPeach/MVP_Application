@@ -27,12 +27,12 @@ class UserDataPresenter(
     private val bag = CompositeDisposable()
 
     init {
-        App.instance.diContainer = DaggerAppComponent
+        App.instance.appComponent = DaggerAppComponent
             .builder()
             .user(user)
             .build()
 
-        App.instance.diContainer.inject(this)
+        App.instance.appComponent.inject(this)
     }
 
     override fun onFirstViewAttach() {

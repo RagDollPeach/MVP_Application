@@ -37,10 +37,10 @@ class UserRepoAdapter : RecyclerView.Adapter<UserRepoAdapter.UserRepoViewHolder>
 
     inner class UserRepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val _repo by lazy { itemView.findViewById<TextView>(R.id.repos_text_view) }
+        private val reposTextView by lazy { itemView.findViewById<TextView>(R.id.repos_text_view) }
 
         fun bind(repo: Repo) {
-            _repo.text = repo.name
+            reposTextView.text = repo.name
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "Forks - ${repo.forksCount}", Toast.LENGTH_SHORT).show()
             }

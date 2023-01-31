@@ -34,6 +34,7 @@ class UserDataFragment : MvpAppCompatFragment(), TransferData, BackPressedListen
     private val user by lazy { arguments?.getParcelable<GithubUser>(ARGS_KEY) as GithubUser }
 
     private val presenter: UserDataPresenter by moxyPresenter { UserDataPresenter(user) }
+
     private var _binding: FragmentUserDataBinding? = null
     private val binding get() = _binding!!
 

@@ -20,7 +20,7 @@ class UserPresenter : MvpPresenter<UserView>() {
     lateinit var router: Router
 
     init {
-        App.instance.diContainer.inject(this)
+        App.instance.appComponent.inject(this)
     }
 
     @SuppressLint("CheckResult")

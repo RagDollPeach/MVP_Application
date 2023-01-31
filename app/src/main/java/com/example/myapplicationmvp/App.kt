@@ -22,7 +22,7 @@ class App: Application() {
 
     val database: MvpAppDatabase by lazy { MvpAppDatabase.create(this) }
 
-    lateinit var diContainer: AppComponent
+    lateinit var appComponent: AppComponent
 
     companion object {
         lateinit var instance: App
@@ -32,7 +32,7 @@ class App: Application() {
         super.onCreate()
         instance = this
 
-        diContainer = DaggerAppComponent
+        appComponent = DaggerAppComponent
             .builder()
             .user(user = null)
             .build()
